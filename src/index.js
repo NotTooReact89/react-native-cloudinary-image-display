@@ -7,8 +7,7 @@ import {
     ImageBackground,
     PixelRatio,
     Dimensions,
-    Text,
-    Image
+    Text
 } from 'react-native';
 
 export default class CloudinaryImage extends Component {
@@ -20,7 +19,8 @@ export default class CloudinaryImage extends Component {
         width: PropTypes.number,
         height: PropTypes.number,
         style: PropTypes.number,
-        borderRadius: PropTypes.number
+        borderRadius: PropTypes.number,
+        placeholder: PropTypes.node
     };
     static defaultProps = {
         cloudName: ' ',
@@ -61,7 +61,14 @@ export default class CloudinaryImage extends Component {
     }
     render() {
         const {loaded, error} = this.state;
-        const {sideMargin, width, height, style, borderRadius} = this.props;
+        const {
+            sideMargin,
+            width,
+            height,
+            style,
+            borderRadius,
+            placeholder
+        } = this.props;
         const layout = Dimensions.get('window');
         const computedWidth = width - 2 * sideMargin;
         const ratio = computedWidth / layout.width;
@@ -89,12 +96,7 @@ export default class CloudinaryImage extends Component {
             >
                 {!loaded && (
                     <View style={defaultStyle.loadingContainer}>
-                        <Text style={defaultStyle.loadingText}>
-                            {'Loading...'}
-                        </Text>
-                        <Image
-                            source={require('../Images/CrankworxRotorua.png')}
-                        />
+                        {placeholder}
                     </View>
                 )}
             </ImageBackground>
